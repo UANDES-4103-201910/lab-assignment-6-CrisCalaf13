@@ -1,9 +1,17 @@
 class RegistrationsController < ApplicationController
 	def new
-	
 	end
 
 	def create
 	    #complete this method
-	end
+	    @user = User.new(params[:user])
+	
+	    if @user.save
+		flash[:notice] = 'User Created Yay!'
+		redirect_to root_url
+	    else
+		flash.now[:error] = 'Could not create User'
+		render 'new'
+	    end
+	end	
 end

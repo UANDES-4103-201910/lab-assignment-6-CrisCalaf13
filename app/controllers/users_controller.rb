@@ -26,19 +26,44 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     #complete this method
+	@user = User.new(user_params)
+
+	respond to do |format|
+	  if @user.save
+	    format.json {render :show, status :created, location @user}
+	    flash[:notice] = 'Success, User Created!'
+	  else
+	    format.json {render json: @user.errors, status: :unprocesable_entity}
+	    flash.now[:error] = 'Error! User could not be created' 
+	  end
+        end 
   end
 
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
     #complete this method
-  end
+    respond_to do |format|
+       if @user.update(user_params)
+          format.json {render :show, staus :ok, location: @user}
+          flash[:notice] = 'Success, User Updated!'
+       else
+	  format.json {render json: @user.errors, status: :unprocessable_entity}
+          flash.now[:error] = 'Error! Could not be Updated'
+       end    
+    end
+ end
 
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
     #complete this method
-  end
+	@user.destroy
+	respond_to do |format|
+	  format.json {head :no_content}
+	  flash[:notice] = 'User deleted'
+	end 
+ end
 
   private
     # Use callbacks to share common setup or constraints between actions.
