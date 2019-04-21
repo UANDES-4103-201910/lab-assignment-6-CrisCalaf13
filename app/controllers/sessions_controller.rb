@@ -6,11 +6,10 @@ class SessionsController < ApplicationController
 		#complete this method
 		if user = User.authenticate(params[:email], params[:password])
 		   session[:current_user_id] = user.id
-		   flash[:notice] = 'Success, you have logged in'
-		   redirect_to root_url
+		   redirect_to root_path, notice: "Success, you have logged in"
 		else
-		   flash.now.alert = 'Sorry, username or password incorrect'
-		   render action: 'new'
+		   flash.now[:error] = 'Sorry, username or password incorrect'
+		   render 'edit'
 		end 
 	end
 
@@ -18,6 +17,6 @@ class SessionsController < ApplicationController
 		#complete this method
 		session[:current_user_id] = nil
 		flash[:notice] = 'Logged out'
-		redirect_to root_url
+		redirect_to root_path
 	end
 end

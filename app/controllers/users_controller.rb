@@ -28,11 +28,10 @@ class UsersController < ApplicationController
     #complete this method
 	@user = User.new(user_params)
 	if @user.save
-	  flash[:notice] = 'Success, User Created!'
-	  redirect_to @user
+	  redirect_to (@user), :notice = 'Success, User created'
         else
 	  flash.now.alert = 'Error! User could not be created' 
-          render 'new'
+          render 'edit'
 	end 
   end
 
@@ -41,11 +40,10 @@ class UsersController < ApplicationController
   def update
     #complete this method
        if @user.update(user_params)
-          flash[:notice] = 'Success, User Updated!'
-	  redirect_to @user
+	  redirect_to (@user), :notice = 'Success, User Updated'
        else
           flash.now.alert = 'Error! Could not be Updated'
-	  render 'new'
+	  render 'edit'
        end    
  end
 
