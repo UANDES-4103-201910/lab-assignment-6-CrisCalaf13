@@ -10,7 +10,7 @@ class RegistrationsController < ApplicationController
 		flash[:notice] = 'User Created Yay!'
 		redirect_to root_url
 	    else
-		flash.now[:error] = 'Could not create User'
+		flash.now.alert = 'Could not create User'
 		render 'new'
 	    end
 	end	
